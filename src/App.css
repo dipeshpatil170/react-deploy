@@ -1,0 +1,13 @@
+.pt-5 {
+   padding-top: 5rem;
+}
+body {
+   background-color: rgba(235, 235, 235, 0.151) !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+*,
+html,
+body {
+   font-family: 'Roboto', sans-serif !important;
+}
