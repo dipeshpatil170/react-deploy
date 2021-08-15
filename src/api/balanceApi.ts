@@ -10,27 +10,24 @@ import {
    fetchBalanceRequest,
    fetchBalanceSuccess,
 } from './../store/actions/balanceAction'
+
+
 export const fetchBalance = () => {
    return (dispatch: any) => {
       dispatch(fetchBalanceRequest())
       setTimeout(async () => {
-         await api
-            .get('/balance')
-            .then((response) => dispatch(fetchBalanceSuccess(response?.data)))
-            .catch((error) => dispatch(fetchBalanceFailure(error)))
+         var balance = JSON.parse(localStorage.balance);
+         dispatch(fetchBalanceSuccess(balance))
       }, 100)
    }
 }
 export const creditBalance = (balanceTobeCredit: number) => {
    return async (dispatch: any) => {
-      const { data } = await api.get('/balance')
-      const newBalanceTobeCredit = data.amount + balanceTobeCredit
+      var balance = JSON.parse(localStorage.balance).amount;
+      localStorage.setItem('balance',JSON.stringify({amount:balance+balanceTobeCredit}))
       dispatch(creditBalanceRequest())
       setTimeout(async () => {
-         await api
-            .patch('/balance', { amount: newBalanceTobeCredit })
-            .then((response) => dispatch(creditBalanceSuccess(response?.data)))
-            .catch((error) => dispatch(creditBalanceFailure(error)))
+         dispatch(creditBalanceSuccess({amount:balance+balanceTobeCredit}))
       }, 1000)
    }
 }

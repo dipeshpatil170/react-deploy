@@ -15,12 +15,12 @@ export const fetchProducts = () => {
    return (dispatch: any) => {
       dispatch(fetchProductsRequest())
       setTimeout(async () => {
-         await api
-            .get('/products')
-            .then((response) => dispatch(fetchProductsSuccess(response?.data)))
-            .catch((error) => dispatch(fetchProductsFailure(error)))
+         var products = JSON.parse(localStorage.products);
+         dispatch(fetchProductsSuccess(products));
       }, 1000)
    }
+  
+   
 }
 export const decrementProductQuantity = (id: number, quantity: number) => {
    return async (dispatch: any) => {

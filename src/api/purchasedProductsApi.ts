@@ -20,35 +20,34 @@ export const fetchPurchasedProducts = () => {
    return (dispatch: any) => {
       dispatch(fetchPurchasedProductsRequest())
       setTimeout(async () => {
-         await api
-            .get('/purchasedproducts')
-            .then((response) =>
-               dispatch(fetchPurchasedProductsSuccess(response?.data))
-            )
-            .catch((error) => dispatch(fetchPurchasedProductsFailure(error)))
+         var purchasedproducts = JSON.parse(localStorage.purchasedproducts);
+         dispatch(fetchPurchasedProductsSuccess(purchasedproducts))
       }, 1000)
    }
 }
 export const addProduct = (product: IProduct, balance: Ibalance) => {
-   let productTobePurchase: IProductPurchase = {
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: 1,
-      image: product.image,
-   }
+  
    return (dispatch: any) => {
       dispatch(addProductRequest())
       setTimeout(async () => {
-         await api
-            .post('/purchasedproducts', productTobePurchase)
-            .then((response) => dispatch(addProductSuccess(response?.data)))
-            .catch((error) => dispatch(addProductFailure(error)))
+         var productslist = JSON.parse(localStorage.products);
+         let productTobePurchase: IProductPurchaseProduct = {
+            id:productslist.length,
+            productId: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+            image: product.image,
+         }
+         const newPurchasedproduct = [...productslist,productTobePurchase]
+         localStorage.setItem('purchasedproducts',JSON.stringify(newPurchasedproduct))
+       
+         dispatch(addProductSuccess(productTobePurchase))
 
-         await dispatch(
-            decrementProductQuantity(product.id, product.quantity - 1)
-         )
-         await dispatch(debitBalance(balance.amount - product.price))
+         // await dispatch(
+         //    decrementProductQuantity(product.id, product.quantity - 1)
+         // )
+         // await dispatch(debitBalance(balance.amount - product.price))
       }, 1000)
    }
 }

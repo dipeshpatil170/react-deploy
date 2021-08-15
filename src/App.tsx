@@ -18,6 +18,54 @@ import { PurchasedProducts } from './pages/purchasedProducts'
 import { Wallet } from './pages/wallet'
 
 function App() {
+   const products = [
+      {
+         "name": "Salad",
+         "price": 10,
+         "quantity": 10,
+         "image": "http://lorempixel.com/160/160/food/5/",
+         "id": 1
+       },
+       {
+         "name": "Ice Apples",
+         "price": 20,
+         "quantity": 10,
+         "image": "http://lorempixel.com/160/160/food/7/",
+         "id": 2
+       },
+       {
+         "name": "Sweets",
+         "price": 30,
+         "quantity": 10,
+         "image": "http://lorempixel.com/160/160/food/8/",
+         "id": 3
+       },
+       {
+         "name": "Sandwich",
+         "price": 40,
+         "quantity": 10,
+         "image": "http://lorempixel.com/160/160/food/9/",
+         "id": 4
+       }
+   ]
+   const balance = {
+      "amount": 10
+    }
+   const purchasedproducts = [
+      {
+      "productId":1,
+      "name": "Sandwich",
+      "price": 40,
+      "quantity": 10,
+      "image": "http://lorempixel.com/160/160/food/9/",
+      "id": 4
+   }
+   ]
+   localStorage.setItem('products',JSON.stringify(products))
+   localStorage.setItem('balance',JSON.stringify(balance))
+   localStorage.setItem('purchasedproducts',JSON.stringify(purchasedproducts))
+ 
+
    const dispatch = useDispatch()
 
    useEffect(() => {
